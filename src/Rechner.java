@@ -2,13 +2,14 @@
 public class Rechner {
 
 	public static void main(String[] args) {
+		//TestHIER-----------------------------------------
 		// Vor Klammern muss auch bei Multiplikation zwingend ein Rechenzeichen.
 		// Negative Zahlen zu nahe bei 0 lösen Error aus.
 		// Rechner.main() dient nur dem Debug, von aussen wird direkt auf
 		// Rechner.rechnen() zugegriffen.
 		// Auch die Konsolenausgaben dienen dem Debug, nicht den Grundfunktionen des
 		// Rechners.
-		String rechnung = "2+2+2*2+2*2+2*2+2*2";
+		String rechnung = "2+2+2*2+2+2*2+2*2";
 		String ergebnis;
 
 		ergebnis = rechnen(rechnung);
