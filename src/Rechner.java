@@ -2,14 +2,14 @@
 public class Rechner {
 
 	public static void main(String[] args) {
-		//TestHIER-----------------------------------------
+		// TestHIER-----------------------------------------
 		// Vor Klammern muss auch bei Multiplikation zwingend ein Rechenzeichen.
 		// Negative Zahlen zu nahe bei 0 lösen Error aus.
 		// Rechner.main() dient nur dem Debug, von aussen wird direkt auf
 		// Rechner.rechnen() zugegriffen.
 		// Auch die Konsolenausgaben dienen dem Debug, nicht den Grundfunktionen des
 		// Rechners.
-		String rechnung = "2+2+2*2+2+2*2+2*2";
+		String rechnung = "((1+2))*(1+2)";
 		String ergebnis;
 
 		ergebnis = rechnen(rechnung);
@@ -19,11 +19,12 @@ public class Rechner {
 	// Rechner.rechnen nimmt die Rechnung an und gibt das Ergebnis der Rechnung
 	// zurück.
 	public static String rechnen(String rechnung) {
-		System.out.println(rechnung);
+		System.out.println("Rechnung " + rechnung);
 		// Erster Schritt ist das überprüfen auf validität der Klammern.
 		String kgg = klammergleichgewicht(rechnung);
 		if (kgg.equals("unterschiedlich")) {
 			System.out.println("Die Rechnung kann nicht verarbeitet werden, überprüfe deine Klammersetzung");
+
 		}
 		// Wenn Klammern vorhanden und valide sind, müssen die zuerst gerechnet werden,
 		// also wird hier der Inhalt des Klammerpaares, das an der Reihe ist,
@@ -31,23 +32,25 @@ public class Rechner {
 		else if (kgg.equals("ja")) {
 			while (kgg.equals("ja")) {
 				String zwischenErgebnis;
-				String darin = rechnung.substring(rechnung.lastIndexOf("(", rechnung.indexOf(")")) + 1,
-						rechnung.indexOf(")"));
-				while (kgg.equals("ja")) {
-					darin = rechnung.substring(rechnung.lastIndexOf("(", rechnung.indexOf(")")) + 1,
-							rechnung.indexOf(")"));
-					System.out.println("while darin " + darin);
-					// Der Inhalt des Klammerpaares wird ausgerechnet.
-					zwischenErgebnis = (strichrechnung(punktrechnung(darin)));
-					System.out.println("zwischenErgebnis " + zwischenErgebnis);
-					// Die Rechnung wird mit dem Ergebnis aus der Klammer aktualisiert.
-					rechnung = rechnung.substring(0, rechnung.lastIndexOf("(")) + zwischenErgebnis
-							+ rechnung.substring(rechnung.indexOf(")") + 1);
-					System.out.println("rechnung " + rechnung);
-					// Der Status von Klammern in der Rechnung wird aktualisiert.
-					kgg = klammergleichgewicht(rechnung);
-					System.out.println("kgg " + kgg);
-				}
+				String darin;
+				darin = rechnung.substring(rechnung.lastIndexOf("(") + 1,
+						rechnung.indexOf(")", rechnung.lastIndexOf("(")));
+
+				System.out.println("while darin " + darin);
+				// Der Inhalt des Klammerpaares wird ausgerechnet.
+				zwischenErgebnis = (strichrechnung(punktrechnung(darin)));
+				System.out.println("zwischenErgebnis " + zwischenErgebnis);
+				// Die Rechnung wird mit dem Ergebnis aus der Klammer aktualisiert.
+				System.out.println("neu rechnung teil1 " + rechnung.substring(0, rechnung.lastIndexOf("(")));
+				System.out.println("neu rechnung teil2 " + zwischenErgebnis);
+				System.out.println("neu rechnung teil3 "
+						+ rechnung.substring(rechnung.indexOf(")", rechnung.lastIndexOf("(")) + 1));
+				rechnung = rechnung.substring(0, rechnung.lastIndexOf("(")) + zwischenErgebnis
+						+ rechnung.substring(rechnung.indexOf(")", rechnung.lastIndexOf("(")) + 1);
+				System.out.println("neu rechnung am ende der while kkg= ja " + rechnung);
+				// Der Status von Klammern in der Rechnung wird aktualisiert.
+				kgg = klammergleichgewicht(rechnung);
+				System.out.println("kgg " + kgg);
 			}
 			// nachdem keine Klammern mehr vorhanden sind, wird außerhalb auch noch
 			// verrechnet.
@@ -101,7 +104,7 @@ public class Rechner {
 	// Ergebnis ersetzt. Wird wiederholt bis keine + und - Operatoren mehr im String
 	// gefunden werden. Gibt den überarbeiteten String zurück.
 	public static String strichrechnung(String r) {
-		System.out.println("STRICHRECHNUNG");
+		System.out.println("STRICHRECHNUNG auf r " + r);
 		// Der Inhalt dieses Strings wird für die gleich folgende Suche benutzt.
 		String striche = "+-";
 		// Diese Variablen werden benutzt für...
@@ -135,10 +138,10 @@ public class Rechner {
 		while (op > -1) {
 			// Der Rechenoperator wird ausgelesen
 			o = Character.toString(r.charAt(op));
-			System.out.println(" vorher " + r);
+			System.out.println(" strichloop r " + r);
 			// Es wird nach folgenden Rechenoperatoren gesucht um zu bestimmen, bis wohin in
 			// der Rechnung die Zahl nach dem ersten gefundenen Rechenoperator reicht.
-			for (int i = op + 2; i < r.length(); i++) {
+			for (int i = op + 1; i < r.length(); i++) {
 				if (r.charAt(i) == striche.charAt(0)) {
 					nachp = i;
 					System.out.println("f+ bei " + i);
@@ -167,10 +170,10 @@ public class Rechner {
 			System.out.println("hier r " + r + " hier vorp" + vorp + " hier op" + op + " hier nachp" + nachp);
 			// vor und nach werden extrahiert.
 			vor = Double.parseDouble(r.substring(vorp, op));
-			System.out.println(r.substring(op + 1, nachp));
+			System.out.println("vor a" + r.substring(vorp, op));
 			nach = Double.parseDouble(r.substring(op + 1, nachp));
-			System.out.println("vor " + vor);
-			System.out.println("nach " + nach);
+			System.out.println("vor b" + vor);
+			System.out.println("nach b" + nach);
 
 			// Die rausgesuchte Rechnung wird ausgeführt.
 			if (o.equals("+")) {
@@ -181,12 +184,12 @@ public class Rechner {
 				System.out.println("Fehler bei o, o ist: " + o + " von Position " + op);
 				break;
 			}
-			System.out.println(r.substring(0, vorp));
-			System.out.println(Double.toString(ergebnis));
-			System.out.println(r.substring(nachp, r.length()));
+			System.out.println("vor c" + r.substring(0, vorp));
+			System.out.println("Ergebnis " + Double.toString(ergebnis));
+			System.out.println("nach c" + r.substring(nachp, r.length()));
 			// Die Rechnung wird mit dem Ergebnis aktualisiert.
 			r = r.substring(0, vorp) + Double.toString(ergebnis) + r.substring(nachp, r.length());
-			System.out.println("r " + r);
+			System.out.println("r strichzusammengesetzt" + r);
 			// Es wird erneut nach einem Rechenoperator gesucht
 			if (Math.min(r.indexOf("-", 1), r.indexOf("+", 1)) > 0) {
 				op = Math.min(r.indexOf("-", 1), r.indexOf("+", 1));
@@ -196,6 +199,7 @@ public class Rechner {
 
 		}
 		// Der überarbeitete String wird zurückgegeben.
+		System.out.println("Der von strichrechnung überarbeitete String wird zurückgegeben. r" + r);
 		return r;
 	}
 
@@ -210,7 +214,7 @@ public class Rechner {
 	// Ergebnis ersetzt. Wird wiederholt bis keine * und / Operatoren mehr im String
 	// gefunden werden. Gibt den überarbeiteten String zurück.
 	public static String punktrechnung(String r) {
-		System.out.println("PUNKTRECHNUNG");
+		System.out.println("PUNKTRECHNUNG r" + r);
 		// Der Inhalt dieses Strings wird für die gleich folgende Suche benutzt.
 		String operatoren = "*/+-";
 		// Diese Variablen werden benutzt für...
@@ -246,7 +250,7 @@ public class Rechner {
 			o = Character.toString(r.charAt(op));
 			// Es wird nach folgenden Rechenoperatoren gesucht um zu bestimmen, bis wohin in
 			// der Rechnung die Zahl nach dem ersten gefundenen Rechenoperator reicht.
-			for (int i = op + 2; i < r.length(); i++) {
+			for (int i = op + 1; i < r.length(); i++) {
 				if (r.charAt(i) == operatoren.charAt(0)) {
 					nachp = i;
 					System.out.println("f* bei " + i);
@@ -310,9 +314,9 @@ public class Rechner {
 				System.out.println("Fehler bei o, o ist: " + o + " von Position " + op);
 				break;
 			}
-			System.out.println(r.substring(0, vorp));
-			System.out.println(Double.toString(ergebnis));
-			System.out.println(r.substring(nachp, r.length()));
+			System.out.println("vor" + r.substring(0, vorp));
+			System.out.println("ergebnis " + Double.toString(ergebnis));
+			System.out.println("nach " + r.substring(nachp, r.length()));
 			// Die Rechnung wird mit dem Ergebnis aktualisiert.
 			if (vorp == 0) {
 				r = Double.toString(ergebnis) + r.substring(nachp, r.length());
