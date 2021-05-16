@@ -2,7 +2,6 @@
 public class Rechner {
 
 	public static void main(String[] args) {
-		// TestHIER-----------------------------------------
 		// Vor Klammern muss auch bei Multiplikation zwingend ein Rechenzeichen.
 		// Negative Zahlen zu nahe bei 0 lösen Error aus.
 		// Rechner.main() dient nur dem Debug, von aussen wird direkt auf

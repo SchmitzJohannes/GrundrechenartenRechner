@@ -240,8 +240,9 @@ public class RechnerGUI extends JFrame {
 				} else {
 					v[0] = "(" + v[0] + (")") + textField.getText();
 				}
+				rechnungsFeld.setText(v[0]);
+				textField.setText("");
 				v[1] = Rechner.rechnen(v[0]);
-				System.out.println(v[0] + "=" + v[1]);
 				ergebnisFeld.setText(v[1]);
 			}
 		});
