@@ -2,13 +2,14 @@
 public class Rechner {
 
 	public static void main(String[] args) {
+		// Version des verbesserten -E
 		// Vor Klammern muss auch bei Multiplikation zwingend ein Rechenzeichen.
 		// Negative Zahlen zu nahe bei 0 lösen Error aus.
 		// Rechner.main() dient nur dem Debug, von aussen wird direkt auf
 		// Rechner.rechnen() zugegriffen.
 		// Auch die Konsolenausgaben dienen dem Debug, nicht den Grundfunktionen des
 		// Rechners.
-		String rechnung = "2/1000000*100"; // -1--1*-1/-1
+		String rechnung = "((0.01/-7.94*-0.02)+-8.99*-9.23*(-2.91/-8.63+-9.7/-0.78)+(-8.11*-2.09)+-4.29+-8.18+-3.73/-10.0)"; // ((0.01/-7.94*-0.02)+-8.99*-9.23*(-2.91/-8.63+-9.7/-0.78)+(-8.11*-2.09)+-4.29+-8.18+-3.73/-10.0)
 		String ergebnis;
 
 		ergebnis = rechnen(rechnung);
@@ -151,9 +152,11 @@ public class Rechner {
 			}
 		}
 		if (r.charAt(op - 1) == striche.charAt(4)) {
-			System.out.println("-E als Ergebnis");
-			return r;
+			System.out.println("-E als ersten OP");
+			op = Math.min(r.indexOf("-", op+1), r.indexOf("+", op+1));
+			System.out.println("op nach -E " + op);
 		}
+			
 
 		// solange wie ein Rechenoperator gefunden wird
 		while (op > -1) {
@@ -164,8 +167,10 @@ public class Rechner {
 			// der Rechnung die Zahl nach dem ersten gefundenen Rechenoperator reicht.
 			for (int i = op + 2; i < r.length(); i++) {
 				if (r.charAt(op - 1) == striche.charAt(4)) {
-					System.out.println("-E als Ergebnis");
-					break;
+					System.out.println("-E als ersten OP");
+					op = Math.min(r.indexOf("-", op+1), r.indexOf("+", op+1));
+					System.out.println("op nach -E " + op);
+					
 				} else {
 					System.out.println("Ende auf Ende");
 					nachp = r.length();
