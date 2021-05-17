@@ -2,14 +2,14 @@
 public class Rechner {
 
 	public static void main(String[] args) {
-		// Version des verbesserten -E
+		// Version der Rechnungen die nicht mehr zu früh zurückgegeben werden
 		// Vor Klammern muss auch bei Multiplikation zwingend ein Rechenzeichen.
 		// Negative Zahlen zu nahe bei 0 lösen Error aus.
 		// Rechner.main() dient nur dem Debug, von aussen wird direkt auf
 		// Rechner.rechnen() zugegriffen.
 		// Auch die Konsolenausgaben dienen dem Debug, nicht den Grundfunktionen des
 		// Rechners.
-		String rechnung = "(28.42-69.47*-99.27)";
+		String rechnung = "(13.58/(84.19*(4.86+-80.93))/-23.22+39.24)";
 		String ergebnis;
 
 		ergebnis = rechnen(rechnung);
@@ -160,7 +160,18 @@ public class Rechner {
 		}
 		if (r.charAt(op - 1) == striche.charAt(4)) {
 			System.out.println("-E als ersten OP");
-			op = Math.min(r.indexOf("-", op+1), r.indexOf("+", op+1));
+			if (Math.min(r.indexOf("-", op+1), r.indexOf("+", op+1)) > 0) {
+				System.out.println("min 2 ");
+				op = Math.min(r.indexOf("-", op+1), r.indexOf("+", op+1));
+				System.out.println("op " + op);
+			} else {
+				System.out.println("max 2 ");
+				op = Math.max(r.indexOf("-", op+1), r.indexOf("+", op+1));
+				System.out.println("op " + op);
+				if(op==-1) {
+					return r;
+				}
+			}
 			System.out.println("op nach -E " + op);
 		}
 			
@@ -175,17 +186,25 @@ public class Rechner {
 			for (int i = op + 2; i < r.length(); i++) {
 				if (r.charAt(op - 1) == striche.charAt(4)) {
 					System.out.println("-E als ersten OP");
-					op = Math.min(r.indexOf("-", op+1), r.indexOf("+", op+1));
-					System.out.println("op nach -E " + op);
-					
+					if (Math.min(r.indexOf("-", op+1), r.indexOf("+", op+1)) > 0) {
+						System.out.println("min 2 ");
+						op = Math.min(r.indexOf("-", op+1), r.indexOf("+", op+1));
+						System.out.println("op " + op);
+					} else {
+						System.out.println("max 2 ");
+						op = Math.max(r.indexOf("-", op+1), r.indexOf("+", op+1));
+						System.out.println("op " + op);
+						if(op==-1) {
+							return r;
+						}
+					}
+					System.out.println("op nach -E " + op);	
 				} else {
 					System.out.println("Ende auf Ende");
 					nachp = r.length();
 				}
-				if (r.charAt(i) == striche.charAt(4)) {
-					i++;
-
-				} else if (r.charAt(i) == striche.charAt(0)) {
+				
+				if (r.charAt(i) == striche.charAt(0)) {
 					nachp = i;
 					System.out.println("f+ bei " + i);
 					break;
