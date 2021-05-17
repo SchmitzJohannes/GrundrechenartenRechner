@@ -9,8 +9,8 @@ public class Rechner {
 		// Rechner.rechnen() zugegriffen.
 		// Auch die Konsolenausgaben dienen dem Debug, nicht den Grundfunktionen des
 		// Rechners.
-		String rechnung = "(-53.08/-62.87*-76.04*-37.38-((-24.52/39.34)/46.98)/50.6)";
-		String ergebnis;
+		String rechnung = "(4.1/58.51/-75.25--99.38/56.65/94.0/84.05)";
+	    String ergebnis;
 
 		ergebnis = rechnen(rechnung);
 		System.out.println("endErgebnis: " + ergebnis);
@@ -180,7 +180,27 @@ public class Rechner {
 		while (op > -1) {
 			// Der Rechenoperator wird ausgelesen
 			o = Character.toString(r.charAt(op));
+			
 			System.out.println(" strichloop r " + r);
+			if (r.charAt(op - 1) == striche.charAt(4)) {
+				System.out.println("-E als ersten OP");
+				if (Math.min(r.indexOf("-", op+1), r.indexOf("+", op+1)) > 0) {
+					System.out.println("min 2 ");
+					op = Math.min(r.indexOf("-", op+1), r.indexOf("+", op+1));
+					System.out.println("op " + op);
+					
+				} else {
+					System.out.println("max 2 ");
+					op = Math.max(r.indexOf("-", op+1), r.indexOf("+", op+1));
+					System.out.println("op " + op);
+					
+					if(op==-1) {
+						return r;
+					}
+				}
+				System.out.println("op nach -E " + op);	
+				
+			}
 			// Es wird nach folgenden Rechenoperatoren gesucht um zu bestimmen, bis wohin in
 			// der Rechnung die Zahl nach dem ersten gefundenen Rechenoperator reicht.
 			for (int i = op + 2; i < r.length(); i++) {
@@ -190,15 +210,18 @@ public class Rechner {
 						System.out.println("min 2 ");
 						op = Math.min(r.indexOf("-", op+1), r.indexOf("+", op+1));
 						System.out.println("op " + op);
+						i = op + 2;
 					} else {
 						System.out.println("max 2 ");
 						op = Math.max(r.indexOf("-", op+1), r.indexOf("+", op+1));
 						System.out.println("op " + op);
+						i = op + 2;
 						if(op==-1) {
 							return r;
 						}
 					}
 					System.out.println("op nach -E " + op);	
+					
 				} else {
 					System.out.println("Ende auf Ende");
 					nachp = r.length();
@@ -236,23 +259,17 @@ public class Rechner {
 			// Zahl nach dem ersten gefundenen Rechenoperator am Ende des Strings.
 			if (nachp <= op) {
 				
-				if (r.charAt(op - 1) == striche.charAt(4)) {
-					System.out.println("-E als Ergebnis");
+				if (r.charAt(nachp - 1) == striche.charAt(4)) {
+					System.out.println("-E bei nachp, sollte Fehler machen");
 					break;
 				} else {
-					System.out.println("Ende auf Ende");
-					nachp = r.length();
+					System.out.println("TODO here?");
 				}
 
 			}
 			if (nachp > r.length()) {
-				if (r.charAt(nachp - 1) == striche.charAt(4)) {
-					System.out.println("-E am Ende darf doch eigentlich gar nicht sein");
-					break;
-				} else {
-					System.out.println("Ende auf Ende");
-					nachp = r.length();
-				}
+				nachp = r.length();
+				
 			}
 			System.out.println("erster strichoperator bei " + op + " ist ein " + o);
 			if (nachp < r.length()) {
@@ -264,6 +281,7 @@ public class Rechner {
 			// vor und nach werden extrahiert.
 			vor = Double.parseDouble(r.substring(vorp, op));
 			System.out.println("vor a" + r.substring(vorp, op));
+			System.out.println("Versuche nach zu setzen als "+ r.substring(op + 1, nachp));
 			nach = Double.parseDouble(r.substring(op + 1, nachp));
 			System.out.println("vor b" + vor);
 			System.out.println("nach b" + nach);
