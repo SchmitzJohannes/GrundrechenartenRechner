@@ -9,8 +9,8 @@ public class Rechner {
 		// Rechner.rechnen() zugegriffen.
 		// Auch die Konsolenausgaben dienen dem Debug, nicht den Grundfunktionen des
 		// Rechners.
-		String rechnung = "(4.1/58.51/-75.25--99.38/56.65/94.0/84.05)";
-	    String ergebnis;
+		String rechnung = "((-23.5+(33.82-25.05)-56.68)/29.01/74.58/-86.91-(28.57/-38.83--41.06)/((72.92*64.17)*86.5)-(70.76--36.5*(-12.53-35.39))*92.7)"; //((-65.22/52.09-5.86)/-86.93+-6.33/77.96+6.88)
+		String ergebnis;
 
 		ergebnis = rechnen(rechnung);
 		System.out.println("endErgebnis: " + ergebnis);
@@ -19,7 +19,7 @@ public class Rechner {
 	// Rechner.rechnen nimmt die Rechnung an und gibt das Ergebnis der Rechnung
 	// zurück.
 	public static String rechnen(String rechnung) {
-		String zeichen  = "+";
+		String zeichen = "+";
 		System.out.println("Rechnung " + rechnung);
 		// Erster Schritt ist das überprüfen auf validität der Klammern.
 		String kgg = klammergleichgewicht(rechnung);
@@ -74,10 +74,9 @@ public class Rechner {
 			System.out.println("rechnung vor strichrechnung " + rechnung);
 			rechnung = strichrechnung(rechnung);
 		}
-		
-		
+
 		// Am Ende wird das Ergebnis der Rechnung zurückgegeben.
-		
+
 		if (rechnung.charAt(0) == zeichen.charAt(0)) {
 			rechnung = rechnung.substring(1);
 		}
@@ -154,79 +153,79 @@ public class Rechner {
 			System.out.println("max ");
 			op = Math.max(r.indexOf("-", 1), r.indexOf("+", 1));
 			System.out.println("op " + op);
-			if(op==-1) {
+			if (op == -1) {
 				return r;
 			}
 		}
 		if (r.charAt(op - 1) == striche.charAt(4)) {
 			System.out.println("-E als ersten OP");
-			if (Math.min(r.indexOf("-", op+1), r.indexOf("+", op+1)) > 0) {
+			if (Math.min(r.indexOf("-", op + 1), r.indexOf("+", op + 1)) > 0) {
 				System.out.println("min 2 ");
-				op = Math.min(r.indexOf("-", op+1), r.indexOf("+", op+1));
+				op = Math.min(r.indexOf("-", op + 1), r.indexOf("+", op + 1));
 				System.out.println("op " + op);
 			} else {
 				System.out.println("max 2 ");
-				op = Math.max(r.indexOf("-", op+1), r.indexOf("+", op+1));
+				op = Math.max(r.indexOf("-", op + 1), r.indexOf("+", op + 1));
 				System.out.println("op " + op);
-				if(op==-1) {
+				if (op == -1) {
 					return r;
 				}
 			}
 			System.out.println("op nach -E " + op);
 		}
-			
 
 		// solange wie ein Rechenoperator gefunden wird
 		while (op > -1) {
 			// Der Rechenoperator wird ausgelesen
 			o = Character.toString(r.charAt(op));
-			
+
 			System.out.println(" strichloop r " + r);
 			if (r.charAt(op - 1) == striche.charAt(4)) {
 				System.out.println("-E als ersten OP");
-				if (Math.min(r.indexOf("-", op+1), r.indexOf("+", op+1)) > 0) {
+				if (Math.min(r.indexOf("-", op + 1), r.indexOf("+", op + 1)) > 0) {
 					System.out.println("min 2 ");
-					op = Math.min(r.indexOf("-", op+1), r.indexOf("+", op+1));
+					op = Math.min(r.indexOf("-", op + 1), r.indexOf("+", op + 1));
 					System.out.println("op " + op);
-					
+					o = Character.toString(r.charAt(op));
+
 				} else {
 					System.out.println("max 2 ");
-					op = Math.max(r.indexOf("-", op+1), r.indexOf("+", op+1));
+					op = Math.max(r.indexOf("-", op + 1), r.indexOf("+", op + 1));
 					System.out.println("op " + op);
-					
-					if(op==-1) {
+					o = Character.toString(r.charAt(op));
+					if (op == -1) {
 						return r;
 					}
 				}
-				System.out.println("op nach -E " + op);	
-				
+				System.out.println("op nach -E " + op);
+
 			}
 			// Es wird nach folgenden Rechenoperatoren gesucht um zu bestimmen, bis wohin in
 			// der Rechnung die Zahl nach dem ersten gefundenen Rechenoperator reicht.
 			for (int i = op + 2; i < r.length(); i++) {
 				if (r.charAt(op - 1) == striche.charAt(4)) {
 					System.out.println("-E als ersten OP");
-					if (Math.min(r.indexOf("-", op+1), r.indexOf("+", op+1)) > 0) {
+					if (Math.min(r.indexOf("-", op + 1), r.indexOf("+", op + 1)) > 0) {
 						System.out.println("min 2 ");
-						op = Math.min(r.indexOf("-", op+1), r.indexOf("+", op+1));
+						op = Math.min(r.indexOf("-", op + 1), r.indexOf("+", op + 1));
 						System.out.println("op " + op);
 						i = op + 2;
 					} else {
 						System.out.println("max 2 ");
-						op = Math.max(r.indexOf("-", op+1), r.indexOf("+", op+1));
+						op = Math.max(r.indexOf("-", op + 1), r.indexOf("+", op + 1));
 						System.out.println("op " + op);
 						i = op + 2;
-						if(op==-1) {
+						if (op == -1) {
 							return r;
 						}
 					}
-					System.out.println("op nach -E " + op);	
-					
+					System.out.println("op nach -E " + op);
+
 				} else {
 					System.out.println("Ende auf Ende");
 					nachp = r.length();
 				}
-				
+
 				if (r.charAt(i) == striche.charAt(0)) {
 					nachp = i;
 					System.out.println("f+ bei " + i);
@@ -234,13 +233,12 @@ public class Rechner {
 				} else if (r.charAt(i) == striche.charAt(1)) {
 					nachp = i;
 					System.out.println("f- bei " + i);
-					if (r.charAt(i-1) == striche.charAt(4)) {
+					if (r.charAt(i - 1) == striche.charAt(4)) {
 						System.out.println("doch kein f- sondern E-");
 						nachp = r.length();
 						i++;
-					}
-					else {
-					break;
+					} else {
+						break;
 					}
 				} else {
 					System.out.println("nicht " + i);
@@ -258,7 +256,7 @@ public class Rechner {
 			// Wenn kein folgender Rechenoperator gefunden wurde, befindet sich das Ende der
 			// Zahl nach dem ersten gefundenen Rechenoperator am Ende des Strings.
 			if (nachp <= op) {
-				
+
 				if (r.charAt(nachp - 1) == striche.charAt(4)) {
 					System.out.println("-E bei nachp, sollte Fehler machen");
 					break;
@@ -269,11 +267,11 @@ public class Rechner {
 			}
 			if (nachp > r.length()) {
 				nachp = r.length();
-				
+
 			}
 			System.out.println("erster strichoperator bei " + op + " ist ein " + o);
 			if (nachp < r.length()) {
-			System.out.println("folgender strichoperator bei " + nachp + "ist ein"+ r.charAt(nachp));
+				System.out.println("folgender strichoperator bei " + nachp + "ist ein" + r.charAt(nachp));
 			} else {
 				System.out.println("kein folgender strichoperator");
 			}
@@ -281,7 +279,7 @@ public class Rechner {
 			// vor und nach werden extrahiert.
 			vor = Double.parseDouble(r.substring(vorp, op));
 			System.out.println("vor a" + r.substring(vorp, op));
-			System.out.println("Versuche nach zu setzen als "+ r.substring(op + 1, nachp));
+			System.out.println("Versuche nach zu setzen als " + r.substring(op + 1, nachp));
 			nach = Double.parseDouble(r.substring(op + 1, nachp));
 			System.out.println("vor b" + vor);
 			System.out.println("nach b" + nach);
@@ -407,16 +405,17 @@ public class Rechner {
 			// der Rechnung die Zahl vor dem ersten gefundenen Punktechenoperator reicht.
 			for (int i = op - 2; i > 0; i--) {
 				if (r.charAt(i) == operatoren.charAt(2)) {
-					vorp = i+1;
+					vorp = i + 1;
 					System.out.println("v+ bei " + i);
 					break;
 				} else if (r.charAt(i) == operatoren.charAt(3)) {
-					if (r.charAt(i-1) == operatoren.charAt(4)) {
+					if (r.charAt(i - 1) == operatoren.charAt(4)) {
 						i--;
 					} else {
-					vorp = i+1;
-					System.out.println("v- bei " + i);
-					break;}
+						vorp = i + 1;
+						System.out.println("v- bei " + i);
+						break;
+					}
 				} else {
 					System.out.println("v nicht bei " + i);
 					if (i == r.length() - 1) {
@@ -446,10 +445,10 @@ public class Rechner {
 			System.out.println("nach " + r.substring(nachp, r.length()));
 			// Die Rechnung wird mit dem Ergebnis aktualisiert.
 			if (vorp == 0) {
-				System.out.println("ende punktrechnungloop " + "vorp ist 0 "+vorp);
+				System.out.println("ende punktrechnungloop " + "vorp ist 0 " + vorp);
 				r = Double.toString(ergebnis) + r.substring(nachp, r.length());
 			} else {
-				System.out.println("ende punktrechnungloop " + "vorp ist nicht 0 "+vorp);
+				System.out.println("ende punktrechnungloop " + "vorp ist nicht 0 " + vorp);
 				r = r.substring(0, vorp) + Double.toString(ergebnis) + r.substring(nachp, r.length());
 			}
 			System.out.println("ende punktrechnungloop r" + r);
@@ -469,15 +468,14 @@ public class Rechner {
 	}
 
 	public static String doppelminuszuplus(String r) {
-		
+
 		while (r.contains("--")) {
-			r=r.replace("--", "+");
+			r = r.replace("--", "+");
 		}
 		while (r.contains("++")) {
-			r=r.replace("++", "+");
+			r = r.replace("++", "+");
 		}
 		System.out.println("rechnung nach minusminus" + r);
 		return r;
 	}
 }
-	
