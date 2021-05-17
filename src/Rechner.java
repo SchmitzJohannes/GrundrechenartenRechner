@@ -2,14 +2,14 @@
 public class Rechner {
 
 	public static void main(String[] args) {
-		// Version der Rechnungen die nicht mehr zu früh zurückgegeben werden
+		// Version der PunktRechnungen die besser mit E- umgehen
 		// Vor Klammern muss auch bei Multiplikation zwingend ein Rechenzeichen.
 		// Negative Zahlen zu nahe bei 0 lösen Error aus.
 		// Rechner.main() dient nur dem Debug, von aussen wird direkt auf
 		// Rechner.rechnen() zugegriffen.
 		// Auch die Konsolenausgaben dienen dem Debug, nicht den Grundfunktionen des
 		// Rechners.
-		String rechnung = "(13.58/(84.19*(4.86+-80.93))/-23.22+39.24)";
+		String rechnung = "(-89.94/(-28.63-3.22+87.21*-91.68/23.56+57.0*(42.18*36.54-33.81)-83.45-14.39+26.01*80.83*67.52)+33.95/61.75/57.51/(90.65*-56.47+50.92--89.18+-7.41)*21.96*4.15*(87.43*48.53--6.15+-79.24+18.04+80.42+-74.81--73.85/41.86-(97.57-(-23.83--94.56))+-8.12)/50.84/-53.33/57.75*37.74/7.6/-94.35+-87.01*-78.85)";
 		String ergebnis;
 
 		ergebnis = rechnen(rechnung);
@@ -209,10 +209,14 @@ public class Rechner {
 					System.out.println("f+ bei " + i);
 					break;
 				} else if (r.charAt(i) == striche.charAt(1)) {
-
 					nachp = i;
-
+					System.out.println("f- bei " + i);
+					if (r.charAt(i-1) == striche.charAt(4)) {
+						i++;
+					}
+					else {
 					break;
+					}
 				} else {
 					System.out.println("nicht " + i);
 					if (i == r.length() - 1) {
@@ -240,8 +244,8 @@ public class Rechner {
 
 			}
 			if (nachp > r.length()) {
-				if (r.charAt(op - 1) == striche.charAt(4)) {
-					System.out.println("-E als Ergebnis");
+				if (r.charAt(nachp - 1) == striche.charAt(4)) {
+					System.out.println("-E am Ende darf doch eigentlich gar nicht sein");
 					break;
 				} else {
 					System.out.println("Ende auf Ende");
@@ -249,7 +253,11 @@ public class Rechner {
 				}
 			}
 			System.out.println("erster strichoperator bei " + op + " ist ein " + o);
-			System.out.println("folgender strichoperator bei " + nachp);
+			if (nachp < r.length()) {
+			System.out.println("folgender strichoperator bei " + nachp + "ist ein"+ r.charAt(nachp));
+			} else {
+				System.out.println("kein folgender strichoperator");
+			}
 			System.out.println("hier r " + r + " hier vorp" + vorp + " hier op" + op + " hier nachp" + nachp);
 			// vor und nach werden extrahiert.
 			vor = Double.parseDouble(r.substring(vorp, op));
