@@ -408,38 +408,15 @@ public class Rechner {
 	}
 
 	public static String doppelminuszuplus(String r) {
-		String m = "-+";
+		
 		while (r.contains("--")) {
-			for (int i = 0; i < r.length(); i++) {
-				System.out.println("contains --");
-				if (r.charAt(i) == m.charAt(0)) {
-					System.out.println("i -");
-					if (r.charAt(i + 1) == m.charAt(0)) {
-						System.out.println("i --");
-						r = r.substring(0, i) + "+" + r.substring(i + 2);
-						System.out.println("r minusminus überarbeitet " + r);
-					}
-				} else {
-
-				}
-			}
+			r=r.replace("--", "+");
 		}
 		while (r.contains("++")) {
-			for (int i = 0; i < r.length(); i++) {
-				System.out.println("contains ++");
-				if (r.charAt(i) == m.charAt(1)) {
-					System.out.println("i +");
-					if (r.charAt(i + 1) == m.charAt(1)) {
-						System.out.println("i ++");
-						r = r.substring(0, i) + "+" + r.substring(i + 2);
-						System.out.println("r plusplus überarbeitet " + r);
-					}
-				} else {
-
-				}
-			}
+			r=r.replace("++", "+");
 		}
 		System.out.println("rechnung nach minusminus" + r);
 		return r;
 	}
 }
+	
