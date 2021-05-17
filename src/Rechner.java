@@ -9,7 +9,7 @@ public class Rechner {
 		// Rechner.rechnen() zugegriffen.
 		// Auch die Konsolenausgaben dienen dem Debug, nicht den Grundfunktionen des
 		// Rechners.
-		String rechnung = "((0.01/-7.94*-0.02)+-8.99*-9.23*(-2.91/-8.63+-9.7/-0.78)+(-8.11*-2.09)+-4.29+-8.18+-3.73/-10.0)"; // ((0.01/-7.94*-0.02)+-8.99*-9.23*(-2.91/-8.63+-9.7/-0.78)+(-8.11*-2.09)+-4.29+-8.18+-3.73/-10.0)
+		String rechnung = "(28.42-69.47*-99.27)";
 		String ergebnis;
 
 		ergebnis = rechnen(rechnung);
@@ -19,6 +19,7 @@ public class Rechner {
 	// Rechner.rechnen nimmt die Rechnung an und gibt das Ergebnis der Rechnung
 	// zurück.
 	public static String rechnen(String rechnung) {
+		String zeichen  = "+";
 		System.out.println("Rechnung " + rechnung);
 		// Erster Schritt ist das überprüfen auf validität der Klammern.
 		String kgg = klammergleichgewicht(rechnung);
@@ -73,7 +74,13 @@ public class Rechner {
 			System.out.println("rechnung vor strichrechnung " + rechnung);
 			rechnung = strichrechnung(rechnung);
 		}
+		
+		
 		// Am Ende wird das Ergebnis der Rechnung zurückgegeben.
+		
+		if (rechnung.charAt(0) == zeichen.charAt(0)) {
+			rechnung = rechnung.substring(1);
+		}
 		return rechnung;
 	}
 
@@ -353,17 +360,16 @@ public class Rechner {
 			// der Rechnung die Zahl vor dem ersten gefundenen Punktechenoperator reicht.
 			for (int i = op - 2; i > 0; i--) {
 				if (r.charAt(i) == operatoren.charAt(2)) {
-					vorp = i;
+					vorp = i+1;
 					System.out.println("v+ bei " + i);
 					break;
 				} else if (r.charAt(i) == operatoren.charAt(3)) {
 					if (r.charAt(i-1) == operatoren.charAt(4)) {
 						i--;
-
-					} else 
-					vorp = i;
+					} else {
+					vorp = i+1;
 					System.out.println("v- bei " + i);
-					break;
+					break;}
 				} else {
 					System.out.println("v nicht bei " + i);
 					if (i == r.length() - 1) {
@@ -393,10 +399,13 @@ public class Rechner {
 			System.out.println("nach " + r.substring(nachp, r.length()));
 			// Die Rechnung wird mit dem Ergebnis aktualisiert.
 			if (vorp == 0) {
+				System.out.println("ende punktrechnungloop " + "vorp ist 0 "+vorp);
 				r = Double.toString(ergebnis) + r.substring(nachp, r.length());
 			} else {
-				r = r.substring(0, vorp + 1) + Double.toString(ergebnis) + r.substring(nachp, r.length());
+				System.out.println("ende punktrechnungloop " + "vorp ist nicht 0 "+vorp);
+				r = r.substring(0, vorp) + Double.toString(ergebnis) + r.substring(nachp, r.length());
 			}
+			System.out.println("ende punktrechnungloop r" + r);
 			r = doppelminuszuplus(r);
 			System.out.println("r " + r);
 			// Es wird erneut nach einem Rechenoperator gesucht
