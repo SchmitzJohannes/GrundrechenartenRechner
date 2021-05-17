@@ -2,14 +2,14 @@
 public class Rechner {
 
 	public static void main(String[] args) {
-		// Version des hin und her
+		// Version der Vorzeichenkorrektur
 		// Vor Klammern muss auch bei Multiplikation zwingend ein Rechenzeichen.
 		// Negative Zahlen zu nahe bei 0 lösen Error aus.
 		// Rechner.main() dient nur dem Debug, von aussen wird direkt auf
 		// Rechner.rechnen() zugegriffen.
 		// Auch die Konsolenausgaben dienen dem Debug, nicht den Grundfunktionen des
 		// Rechners.
-		String rechnung = "((-23.5+(33.82-25.05)-56.68)/29.01/74.58/-86.91-(28.57/-38.83--41.06)/((72.92*64.17)*86.5)-(70.76--36.5*(-12.53-35.39))*92.7)"; //((-65.22/52.09-5.86)/-86.93+-6.33/77.96+6.88)
+		String rechnung = "(-46.33-78.09/48.55+-67.5*-84.37*80.52+-15.25*(-47.62+-20.2/-87.44/87.13+8.22+-3.12/1.43+-37.08+-5.66/-89.18*22.45*-53.2)/-23.05-54.62--91.56/(68.34*-33.93+-40.92)/14.09*(-8.63+75.73*81.89*-86.87*(58.04--62.07)))"; //(-46.33-78.09/48.55+-67.5*-84.37*80.52+-15.25*(-47.62+-20.2/-87.44/87.13+8.22+-3.12/1.43+-37.08+-5.66/-89.18*22.45*-53.2)/-23.05-54.62--91.56/(68.34*-33.93+-40.92)/14.09*(-8.63+75.73*81.89*-86.87*(58.04--62.07)))
 		String ergebnis;
 
 		ergebnis = rechnen(rechnung);
@@ -192,10 +192,11 @@ public class Rechner {
 					System.out.println("max 2 ");
 					op = Math.max(r.indexOf("-", op + 1), r.indexOf("+", op + 1));
 					System.out.println("op " + op);
-					o = Character.toString(r.charAt(op));
 					if (op == -1) {
 						return r;
 					}
+					o = Character.toString(r.charAt(op));
+					
 				}
 				System.out.println("op nach -E " + op);
 
@@ -368,7 +369,14 @@ public class Rechner {
 			// der Rechnung die Zahl nach dem ersten gefundenen Rechenoperator reicht.
 			for (int i = op + 2; i < r.length(); i++) {
 				if (r.charAt(i) == operatoren.charAt(4)) {
-					i++;
+					if (i == r.length() - 2) {
+						nachp = r.length();
+						System.out.println("kein nachp und E vorm Ende");
+					}
+					else {
+						i++;
+					}
+			
 				} else if (r.charAt(i) == operatoren.charAt(0)) {
 					nachp = i;
 					System.out.println("f* bei " + i);
@@ -386,9 +394,10 @@ public class Rechner {
 					System.out.println("f- bei " + i);
 					break;
 				} else {
-					System.out.println("nicht " + i);
+					System.out.println("nachp ist nicht bei " + i);
 					if (i == r.length() - 1) {
 						nachp = r.length();
+						System.out.println("kein nachp");
 					}
 				}
 			}
@@ -424,6 +433,7 @@ public class Rechner {
 				}
 			} // vor und nach werden extrahiert.
 			vor = Double.parseDouble(r.substring(vorp, op));
+			System.out.println("versuche nach zu setzen auf" + r.substring(op + 1, nachp)+" op "+r.charAt(op)+ " at "+op+" nachp "+nachp+" r ist lang "+r.length());
 			nach = Double.parseDouble(r.substring(op + 1, nachp));
 			System.out.println("vor " + vor);
 			System.out.println("nach " + nach);
