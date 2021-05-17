@@ -2,14 +2,14 @@
 public class Rechner {
 
 	public static void main(String[] args) {
-		// Version der PunktRechnungen die besser mit E- umgehen
+		// Version des hin und her
 		// Vor Klammern muss auch bei Multiplikation zwingend ein Rechenzeichen.
 		// Negative Zahlen zu nahe bei 0 lösen Error aus.
 		// Rechner.main() dient nur dem Debug, von aussen wird direkt auf
 		// Rechner.rechnen() zugegriffen.
 		// Auch die Konsolenausgaben dienen dem Debug, nicht den Grundfunktionen des
 		// Rechners.
-		String rechnung = "(-89.94/(-28.63-3.22+87.21*-91.68/23.56+57.0*(42.18*36.54-33.81)-83.45-14.39+26.01*80.83*67.52)+33.95/61.75/57.51/(90.65*-56.47+50.92--89.18+-7.41)*21.96*4.15*(87.43*48.53--6.15+-79.24+18.04+80.42+-74.81--73.85/41.86-(97.57-(-23.83--94.56))+-8.12)/50.84/-53.33/57.75*37.74/7.6/-94.35+-87.01*-78.85)";
+		String rechnung = "(-53.08/-62.87*-76.04*-37.38-((-24.52/39.34)/46.98)/50.6)";
 		String ergebnis;
 
 		ergebnis = rechnen(rechnung);
@@ -212,6 +212,8 @@ public class Rechner {
 					nachp = i;
 					System.out.println("f- bei " + i);
 					if (r.charAt(i-1) == striche.charAt(4)) {
+						System.out.println("doch kein f- sondern E-");
+						nachp = r.length();
 						i++;
 					}
 					else {
