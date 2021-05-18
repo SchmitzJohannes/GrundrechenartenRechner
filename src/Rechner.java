@@ -2,9 +2,8 @@
 public class Rechner {
 
 	public static void main(String[] args) {
-		// Version der Vorzeichenkorrektur
+		// Version fixed i++
 		// Vor Klammern muss auch bei Multiplikation zwingend ein Rechenzeichen.
-		// Negative Zahlen zu nahe bei 0 lösen Error aus.
 		// Rechner.main() dient nur dem Debug, von aussen wird direkt auf
 		// Rechner.rechnen() zugegriffen.
 		// Auch die Konsolenausgaben dienen dem Debug, nicht den Grundfunktionen des
@@ -24,7 +23,7 @@ public class Rechner {
 		// Erster Schritt ist das überprüfen auf validität der Klammern.
 		String kgg = klammergleichgewicht(rechnung);
 		if (kgg.equals("unterschiedlich")) {
-			System.out.println("Die Rechnung kann nicht verarbeitet werden, überprüfe deine Klammersetzung");
+			rechnung="Überprüfe die Klammersetzung.";
 
 		}
 		// Wenn Klammern vorhanden und valide sind, müssen die zuerst gerechnet werden,
@@ -67,7 +66,6 @@ public class Rechner {
 			rechnung = strichrechnung(rechnung);
 			// Wenn keine Klammern vorhanden sind, wird sofort ausgerechnet.
 		} else if (kgg.equals("keine")) {
-			rechnung = doppelminuszuplus(rechnung);
 			rechnung = doppelminuszuplus(rechnung);
 			System.out.println("rechnung vor punktrechnung " + rechnung);
 			rechnung = punktrechnung(rechnung);
@@ -223,7 +221,6 @@ public class Rechner {
 					System.out.println("op nach -E " + op);
 
 				} else {
-					System.out.println("Ende auf Ende");
 					nachp = r.length();
 				}
 
@@ -248,7 +245,6 @@ public class Rechner {
 							System.out.println("-E als Ergebnis");
 							break;
 						} else {
-							System.out.println("Ende auf Ende");
 							nachp = r.length();
 						}
 					}

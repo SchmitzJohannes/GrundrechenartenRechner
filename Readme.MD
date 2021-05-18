@@ -2,7 +2,7 @@ GrundrechenartenRechner
 
 was created by SchmitzJohannes using Eclipse IDE for Java Developers and the Eclipse Marketplace solution Windowbuilder 1.9.5.
 
-HelpD.Java is an unfinished Display for instructions.
+HelpD.Java is the display for instructions.
 
 Rechner.Java contains the parts responsible for calculating the calculations.
 
@@ -12,6 +12,6 @@ Vor Klammern muss auch bei Multiplikation zwingend ein Rechenzeichen.
 
 Maus während des Klickens nicht bewegen.
 
-Negative Zahlen zu nahe bei 0 verursachen Error.
-
 Nur Zahlen werden unterstützt, keine Variablen.
+
+Es wird automatisch von der letzten Rechnung aus weitergerechnet. Zum starten einer neuen Rechnung CE drücken oder c eingeben.

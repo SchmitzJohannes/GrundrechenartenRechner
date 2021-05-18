@@ -39,6 +39,7 @@ public class RechnerGUI extends JFrame {
 					e.printStackTrace();
 				}
 			}
+			
 		});
 
 	}
@@ -57,7 +58,9 @@ public class RechnerGUI extends JFrame {
         // Rechnung und Ergebnis werden auf leere Strings gesetzt damit sie nicht wie von Erstellung noch null sind.
 		v[0] = "";
 		v[1] = "";
-
+		//Usage instructions get displayed on startup
+		HelpD.main(null);
+		
 		textField = new JTextField();
 		textField.addKeyListener(new KeyAdapter() {
 			@Override
@@ -297,7 +300,7 @@ public class RechnerGUI extends JFrame {
 			}
 		});
 		btnNewButton_15.setToolTipText(
-				"Vor Klammern muss auch bei Multiplikation zwingend ein Rechenzeichen. Maus während des Klickens nicht bewegen. Negative Zahlen zu nahe bei 0 verursachen Error.Nur Zahlen werden unterstützt, keine Variablen");
+				"Vor Klammern muss auch bei Multiplikation zwingend ein Rechenzeichen. Maus während des Klickens nicht bewegen.Nur Zahlen werden unterstützt, keine Variablen.Es wird automatisch von der letzten Rechnung aus weitergerechnet, zum starten einer neuen Rechnung CE drücken oder c eingeben.");
 
 		btnNewButton_15.setBounds(307, 204, 89, 23);
 		contentPane.add(btnNewButton_15);
@@ -385,9 +388,7 @@ public class RechnerGUI extends JFrame {
 
 	}
 
-	/**
-	 * J J S
-	 */
+	
     // Enthält Rechnung und Ergebnis
 	String[] v = new String[2];
 	// Die Schreib- und Anzeigefelder werden bei Erstellung diesen Variablen zugewiesen, damit mit diesen auch nach Erstellung noch interagiert werden kann.

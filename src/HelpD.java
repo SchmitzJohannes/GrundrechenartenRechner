@@ -34,14 +34,14 @@ public class HelpD extends JDialog {
 		setTitle("Help");
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setAlwaysOnTop(true);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 500, 200);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setLayout(new FlowLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		{
-			JLabel lblNewLabel = new JLabel("Tooltip vom Helpknopf für Infos");
-			lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 24));
+			JLabel lblNewLabel = new JLabel("<html>  Vor Klammern muss auch bei Multiplikation zwingend ein Rechenzeichen.<br>  Maus während des Klickens nicht bewegen.<br>  Nur Zahlen werden unterstützt, keine Variablen.<br>  Es wird automatisch von der letzten Rechnung aus weitergerechnet.<br>  Zum starten einer neuen Rechnung CE drücken oder c eingeben.</html>");
+			lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			contentPanel.add(lblNewLabel);
 		}
 		{
