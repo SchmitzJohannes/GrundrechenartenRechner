@@ -256,12 +256,14 @@ public class Rechner {
 				} else {
 					nachp = r.length();
 				}
-
 			}
 			if (nachp > r.length()) {
 				nachp = r.length();
-
 			}
+			if (op+2>=r.length()) {
+				nachp=r.length();
+			}
+			
 			System.out.println("erster strichoperator bei " + op + " ist ein " + o);
 			if (nachp < r.length()) {
 				System.out.println("folgender strichoperator bei " + nachp + "ist ein" + r.charAt(nachp));
@@ -396,6 +398,9 @@ public class Rechner {
 			if (nachp > r.length()) {
 				nachp = r.length();
 			}
+			if (op+2>=r.length()) {
+				nachp=r.length();
+			}
 			// Es wird nach Strichrechnungsoperatoren vor dem ersten gefundenen
 			// Punktrechnungsoperator gesucht um zu bestimmen, von woher in
 			// der Rechnung die Zahl vor dem ersten gefundenen Punktechenoperator reicht.
@@ -420,7 +425,7 @@ public class Rechner {
 				}
 			} // vor und nach werden extrahiert.
 			vor = Double.parseDouble(r.substring(vorp, op));
-			System.out.println("versuche nach zu setzen auf" + r.substring(op + 1, nachp) + " op " + r.charAt(op)
+			System.out.println("versuche nach zu setzen auf " + r.substring(op + 1, nachp) + " op " + r.charAt(op)
 					+ " at " + op + " nachp " + nachp + " r ist lang " + r.length());
 			nach = Double.parseDouble(r.substring(op + 1, nachp));
 			System.out.println("vor " + vor);
@@ -471,9 +476,11 @@ public class Rechner {
 		while (r.contains("++")) {
 			r = r.replace("++", "+");
 		}
-		while (r.contains(",")) {
-			r = r.replace(",", ".");
-		}
+		
+	    r = r.replace(",", ".");
+	    
+	    
+		
 		System.out.println("formatiert zu " + r);
 		return r;
 	}

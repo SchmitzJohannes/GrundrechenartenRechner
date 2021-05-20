@@ -1,17 +1,12 @@
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.GridLayout;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-import javax.swing.JTextArea;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.JTextPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -37,13 +32,11 @@ public class RechnerGUI extends JFrame {
 					e.printStackTrace();
 				}
 			}
-			
 		});
-
 	}
 
 	/**
-	 * Create the frame.
+	 * Create the fr
 	 */
 	public RechnerGUI() {
 		setTitle("Rechnerartig");
@@ -53,34 +46,53 @@ public class RechnerGUI extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-        // Rechnung und Ergebnis werden auf leere Strings gesetzt damit sie nicht wie von Erstellung noch null sind.
+		// Rechnung und Ergebnis werden auf leere Strings gesetzt damit sie nicht wie
+		// von Erstellung noch null sind.
 		v[0] = "";
 		v[1] = "";
-		//Usage instructions get displayed on startup
+		// Usage instructions get displayed on startup
 		HelpD.main(null);
-		
+
 		textField = new JTextField();
 		textField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					// Entspricht dem drücken des = Knopfes
+					// Bereinigung
+					v[0] = "(" + v[0] + (")") + textField.getText();
+					v[0] = "(" + v[0] + ")";
+					System.out.println("vor rein " + v[0]);
+					v[0] = bereinigung(v[0]);
 					if (v[0].equals("")) {
-						v[0] = textField.getText();
-					} else {
-						v[0] = "(" + v[0] + (")") + textField.getText();
+						v[0] = "(0)";
 					}
+					// Weitersendung
 					rechnungsFeld.setText(v[0]);
 					textField.setText("");
 					v[1] = Rechner.rechnen(v[0]);
 					ergebnisFeld.setText(v[1]);
+
 				} else if (e.getKeyCode() == KeyEvent.VK_C) {
 					// Entspricht dem drücken des CE Knopfes
 					v = clearplease(v);
 					ergebnisFeld.setText(v[1]);
 					rechnungsFeld.setText(v[0]);
 					eingabeFeld.setText("");
+
+				} else if (e.getKeyCode() == KeyEvent.VK_EQUALS) {
+					// war gedacht zum löschen des "=" und einleiten der Rechnung, funktioniert aber
+					// nicht
+					v[0] = "(" + v[0] + ")" + textField.getText();
+					v[0] = v[0].substring(0, v[0].length() - 1);
+					v[0] = "(" + v[0] + ")";
+					v[0] = bereinigung(v[0]);
+					rechnungsFeld.setText(v[0]);
+					textField.setText("");
+					v[1] = Rechner.rechnen(v[0]);
+					ergebnisFeld.setText(v[1]);
 				}
+
 			}
 		});
 		textField.setBounds(124, 11, 300, 20);
@@ -236,11 +248,15 @@ public class RechnerGUI extends JFrame {
 		btnNewButton_11.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				// Bereinigung
+				v[0] = "(" + v[0] + (")") + textField.getText();
+				v[0] = "(" + v[0] + ")";
+				System.out.println("vor rein " + v[0]);
+				v[0] = bereinigung(v[0]);
 				if (v[0].equals("")) {
-					v[0] = textField.getText();
-				} else {
-					v[0] = "(" + v[0] + (")") + textField.getText();
+					v[0] = "(0)";
 				}
+				// Weitersendung
 				rechnungsFeld.setText(v[0]);
 				textField.setText("");
 				v[1] = Rechner.rechnen(v[0]);
@@ -386,14 +402,16 @@ public class RechnerGUI extends JFrame {
 
 	}
 
-	
-    // Enthält Rechnung und Ergebnis
+	// Enthält Rechnung und Ergebnis
 	String[] v = new String[2];
-	// Die Schreib- und Anzeigefelder werden bei Erstellung diesen Variablen zugewiesen, damit mit diesen auch nach Erstellung noch interagiert werden kann.
+	// Die Schreib- und Anzeigefelder werden bei Erstellung diesen Variablen
+	// zugewiesen, damit mit diesen auch nach Erstellung noch interagiert werden
+	// kann.
 	JTextPane rechnungsFeld;
 	JTextPane ergebnisFeld;
 	JTextField eingabeFeld;
-    // Setzt Rechnungs- und Ergebnisvariable zurück
+
+	// Setzt Rechnungs- und Ergebnisvariable zurück
 	public static String[] clearplease(String[] tbc) {
 
 		tbc[0] = "";
@@ -402,7 +420,9 @@ public class RechnerGUI extends JFrame {
 
 		return tbc;
 	}
-    //Funktion der meisten Knöpfe ist es ihre Beschriftung an die Rechnung anzufügen
+
+	// Funktion der meisten Knöpfe ist es ihre Beschriftung an die Rechnung
+	// anzufügen
 	public static String rechnungAppend(String rechnung, String knopftext) {
 		if (rechnung.equals("")) {
 			rechnung = knopftext;
@@ -410,6 +430,40 @@ public class RechnerGUI extends JFrame {
 			rechnung = rechnung + knopftext;
 		}
 		return rechnung;
+	}
+
+	public static String bereinigung(String s) {
+		String zeichen = "()";
+		while (s.contains("=")) {
+			System.out.println("vor = " + s.substring(0, s.indexOf("=")));
+			System.out.println("nach = " + s.substring(s.indexOf("=") + 1));
+			s = s.substring(0, s.indexOf("=")) + s.substring(s.indexOf("=") + 1);
+		}
+
+		if (s.contains("(")) {
+			System.out.println("Suche nach überzähligen komplettKlammerungen");
+			while (s.charAt(0) == zeichen.charAt(0) && (s.charAt(s.length() - 1) == zeichen.charAt(1))
+					&& (s.charAt(1) == zeichen.charAt(0)) && (s.charAt(s.length() - 2) == zeichen.charAt(1))) {
+				s = s.substring(1, s.length() - 1);
+
+			}
+			if (s.contains("()")) {
+				for (int i = 0; i < s.length() - 1; i++) {
+					if (s.charAt(i) == zeichen.charAt(0)) {
+						if (s.charAt(i + 1) == zeichen.charAt(1)) {
+							s = s.substring(0, i) + s.substring(i + 2);
+							i = -1;
+							System.out.println("new s " + s);
+						} else {
+							System.out.println("old s " + s + "i " + i);
+						}
+					} else {
+						System.out.println("ALSO old s " + s + "i " + i);
+					}
+				}
+			}
+		}
+		return s;
 	}
 
 }
