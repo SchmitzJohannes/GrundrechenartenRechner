@@ -2,13 +2,15 @@
 public class Rechner {
 
 	public static void main(String[] args) {
-		// Version fixed i++
+		// Version of compatibility with ,
 		// Vor Klammern muss auch bei Multiplikation zwingend ein Rechenzeichen.
 		// Rechner.main() dient nur dem Debug, von aussen wird direkt auf
 		// Rechner.rechnen() zugegriffen.
-		// Auch die Konsolenausgaben dienen dem Debug, nicht den Grundfunktionen des
-		// Rechners.
-		String rechnung = "(-46.33-78.09/48.55+-67.5*-84.37*80.52+-15.25*(-47.62+-20.2/-87.44/87.13+8.22+-3.12/1.43+-37.08+-5.66/-89.18*22.45*-53.2)/-23.05-54.62--91.56/(68.34*-33.93+-40.92)/14.09*(-8.63+75.73*81.89*-86.87*(58.04--62.07)))"; //(-46.33-78.09/48.55+-67.5*-84.37*80.52+-15.25*(-47.62+-20.2/-87.44/87.13+8.22+-3.12/1.43+-37.08+-5.66/-89.18*22.45*-53.2)/-23.05-54.62--91.56/(68.34*-33.93+-40.92)/14.09*(-8.63+75.73*81.89*-86.87*(58.04--62.07)))
+		// Auch die Konsolenausgaben dienen hauptsächlich dem Debug, nicht den
+		// Grundfunktionen des Rechners, aber nicht alle durch falsche Angaben möglichen
+		// Fehler werden abgefangen. Beispielsweise können falsche Klammereingaben zu
+		// Fehlern führen die nicht von klammergleichgewicht() abgefangen werden.
+		String rechnung = "(-46.33-78.09/48.55+-67.5*-84.37*80.52+-15.25*(-47.62+-20.2/-87.44/87.13+8.22+-3.12/1.43+-37.08+-5.66/-89.18*22.45*-53.2)/-23.05-54.62--91.56/(68.34*-33.93+-40.92)/14.09*(-8.63+75.73*81.89*-86.87*(58.04--62.07)))"; // (-46.33-78.09/48.55+-67.5*-84.37*80.52+-15.25*(-47.62+-20.2/-87.44/87.13+8.22+-3.12/1.43+-37.08+-5.66/-89.18*22.45*-53.2)/-23.05-54.62--91.56/(68.34*-33.93+-40.92)/14.09*(-8.63+75.73*81.89*-86.87*(58.04--62.07)))
 		String ergebnis;
 
 		ergebnis = rechnen(rechnung);
@@ -23,14 +25,13 @@ public class Rechner {
 		// Erster Schritt ist das überprüfen auf validität der Klammern.
 		String kgg = klammergleichgewicht(rechnung);
 		if (kgg.equals("unterschiedlich")) {
-			rechnung="Überprüfe die Klammersetzung.";
-
+			rechnung = "Überprüfe die Klammersetzung.";
 		}
 		// Wenn Klammern vorhanden und valide sind, müssen die zuerst gerechnet werden,
 		// also wird hier der Inhalt des Klammerpaares, das an der Reihe ist,
 		// extrahiert.
 		else if (kgg.equals("ja")) {
-			rechnung = doppelminuszuplus(rechnung);
+			rechnung = formatierungshilfe(rechnung);
 			while (kgg.equals("ja")) {
 				String zwischenErgebnis;
 				String darin;
@@ -50,8 +51,8 @@ public class Rechner {
 
 				rechnung = rechnung.substring(0, rechnung.lastIndexOf("(")) + zwischenErgebnis
 						+ rechnung.substring(rechnung.indexOf(")", rechnung.lastIndexOf("(")) + 1);
-				rechnung = doppelminuszuplus(rechnung);
-				System.out.println("neu rechnung am ende der while kkg= ja " + rechnung);
+				rechnung = formatierungshilfe(rechnung);
+				System.out.println("neu rechnung am ende der while kgg= ja " + rechnung);
 
 				// Der Status von Klammern in der Rechnung wird aktualisiert.
 				kgg = klammergleichgewicht(rechnung);
@@ -59,22 +60,18 @@ public class Rechner {
 			}
 			// nachdem keine Klammern mehr vorhanden sind, wird außerhalb auch noch
 			// verrechnet.
-			rechnung = doppelminuszuplus(rechnung);
+			rechnung = formatierungshilfe(rechnung);
 			System.out.println("rechnung vor punktrechnung " + rechnung);
 			rechnung = punktrechnung(rechnung);
 			System.out.println("rechnung vor strichrechnung " + rechnung);
 			rechnung = strichrechnung(rechnung);
 			// Wenn keine Klammern vorhanden sind, wird sofort ausgerechnet.
 		} else if (kgg.equals("keine")) {
-			rechnung = doppelminuszuplus(rechnung);
-			System.out.println("rechnung vor punktrechnung " + rechnung);
+			rechnung = formatierungshilfe(rechnung);
 			rechnung = punktrechnung(rechnung);
-			System.out.println("rechnung vor strichrechnung " + rechnung);
 			rechnung = strichrechnung(rechnung);
 		}
-
 		// Am Ende wird das Ergebnis der Rechnung zurückgegeben.
-
 		if (rechnung.charAt(0) == zeichen.charAt(0)) {
 			rechnung = rechnung.substring(1);
 		}
@@ -108,7 +105,6 @@ public class Rechner {
 		} else if (kla == 0) {
 			return ("keine");
 		} else {
-
 			return ("ja");
 		}
 	}
@@ -141,7 +137,7 @@ public class Rechner {
 		// den Rechenoperator
 		String o;
 
-		r = doppelminuszuplus(r);
+		r = formatierungshilfe(r);
 		// Es wird nach dem Rechenoperator gesucht.
 		if (Math.min(r.indexOf("-", 1), r.indexOf("+", 1)) > 0) {
 			System.out.println("min ");
@@ -194,7 +190,7 @@ public class Rechner {
 						return r;
 					}
 					o = Character.toString(r.charAt(op));
-					
+
 				}
 				System.out.println("op nach -E " + op);
 
@@ -258,7 +254,7 @@ public class Rechner {
 					System.out.println("-E bei nachp, sollte Fehler machen");
 					break;
 				} else {
-					System.out.println("TODO here?");
+					nachp = r.length();
 				}
 
 			}
@@ -299,7 +295,7 @@ public class Rechner {
 			System.out.println("nach c" + r.substring(nachp, r.length()));
 			// Die Rechnung wird mit dem Ergebnis aktualisiert.
 			r = r.substring(0, vorp) + Double.toString(ergebnis) + r.substring(nachp, r.length());
-			r = doppelminuszuplus(r);
+			r = formatierungshilfe(r);
 			System.out.println("r strichzusammengesetzt" + r);
 			// Es wird erneut nach einem Rechenoperator gesucht
 			if (Math.min(r.indexOf("-", 1), r.indexOf("+", 1)) > 0) {
@@ -307,11 +303,10 @@ public class Rechner {
 			} else {
 				op = Math.max(r.indexOf("-", 1), r.indexOf("+", 1));
 			}
-
 		}
 		// Der überarbeitete String wird zurückgegeben.
 		System.out.println("Der von strichrechnung überarbeitete String wird zurückgegeben. r" + r);
-		r = doppelminuszuplus(r);
+		r = formatierungshilfe(r);
 		return r;
 	}
 
@@ -319,9 +314,8 @@ public class Rechner {
 	// / Operatoren. Anschließend wird ein Substring von nach einem zuvor gefundenen
 	// Strichoperator oder dem Beginn des Strings bis zum
 	// ersten gefundenen Punktoperator in einen Double gesetzt und ein Substring von
-	// nach
-	// dem Operator bis zum nächsten Operator oder dem Stringende ebenfalls in ein
-	// weiteres Double gesetzt. Dann wird die Rechnung Double * bzw / Double
+	// nach dem Operator bis zum nächsten Operator oder dem Stringende ebenfalls in
+	// ein weiteres Double gesetzt. Dann wird die Rechnung Double * bzw / Double
 	// ausgeführt und im String die beiden Doubles und der Operator durch das
 	// Ergebnis ersetzt. Wird wiederholt bis keine * und / Operatoren mehr im String
 	// gefunden werden. Gibt den überarbeiteten String zurück.
@@ -344,7 +338,7 @@ public class Rechner {
 		int op = 0;
 		// den Rechenoperator
 		String o;
-		r = doppelminuszuplus(r);
+		r = formatierungshilfe(r);
 		// Es wird nach dem Rechenoperator gesucht.
 		if (Math.min(r.indexOf("*", 1), r.indexOf("/", 1)) > 0) {
 			System.out.println("min ");
@@ -355,7 +349,6 @@ public class Rechner {
 			op = Math.max(r.indexOf("*", 1), r.indexOf("/", 1));
 			System.out.println("op " + op);
 		}
-
 		// solange wie ein Rechenoperator gefunden wird
 		while (op > -1) {
 			System.out.println(" vorher " + r);
@@ -368,11 +361,9 @@ public class Rechner {
 					if (i == r.length() - 2) {
 						nachp = r.length();
 						System.out.println("kein nachp und E vorm Ende");
-					}
-					else {
+					} else {
 						i++;
 					}
-			
 				} else if (r.charAt(i) == operatoren.charAt(0)) {
 					nachp = i;
 					System.out.println("f* bei " + i);
@@ -429,7 +420,8 @@ public class Rechner {
 				}
 			} // vor und nach werden extrahiert.
 			vor = Double.parseDouble(r.substring(vorp, op));
-			System.out.println("versuche nach zu setzen auf" + r.substring(op + 1, nachp)+" op "+r.charAt(op)+ " at "+op+" nachp "+nachp+" r ist lang "+r.length());
+			System.out.println("versuche nach zu setzen auf" + r.substring(op + 1, nachp) + " op " + r.charAt(op)
+					+ " at " + op + " nachp " + nachp + " r ist lang " + r.length());
 			nach = Double.parseDouble(r.substring(op + 1, nachp));
 			System.out.println("vor " + vor);
 			System.out.println("nach " + nach);
@@ -458,22 +450,20 @@ public class Rechner {
 				r = r.substring(0, vorp) + Double.toString(ergebnis) + r.substring(nachp, r.length());
 			}
 			System.out.println("ende punktrechnungloop r" + r);
-			r = doppelminuszuplus(r);
-			System.out.println("r " + r);
+			r = formatierungshilfe(r);
 			// Es wird erneut nach einem Rechenoperator gesucht
 			if (Math.min(r.indexOf("*", 1), r.indexOf("/", 1)) > 0) {
 				op = Math.min(r.indexOf("*", 1), r.indexOf("/", 1));
 			} else {
 				op = Math.max(r.indexOf("*", 1), r.indexOf("/", 1));
 			}
-
 		}
-		r = doppelminuszuplus(r);
+		r = formatierungshilfe(r);
 		// Der überarbeitete String wird zurückgegeben.
 		return r;
 	}
 
-	public static String doppelminuszuplus(String r) {
+	public static String formatierungshilfe(String r) {
 
 		while (r.contains("--")) {
 			r = r.replace("--", "+");
@@ -481,7 +471,10 @@ public class Rechner {
 		while (r.contains("++")) {
 			r = r.replace("++", "+");
 		}
-		System.out.println("rechnung nach minusminus" + r);
+		while (r.contains(",")) {
+			r = r.replace(",", ".");
+		}
+		System.out.println("formatiert zu " + r);
 		return r;
 	}
 }

@@ -10,8 +10,6 @@ RechnerGUI.Java provides a GUI to make use of Rechner.Java.
 
 Vor Klammern muss auch bei Multiplikation zwingend ein Rechenzeichen.
 
-Maus während des Klickens nicht bewegen.
-
 Nur Zahlen werden unterstützt, keine Variablen.
 
 Es wird automatisch von der letzten Rechnung aus weitergerechnet. Zum starten einer neuen Rechnung CE drücken oder c eingeben.
