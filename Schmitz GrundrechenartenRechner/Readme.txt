@@ -14,4 +14,4 @@ Nur Zahlen werden unterstützt, keine Variablen.
 
 Es wird automatisch von der letzten Rechnung aus weitergerechnet. Zum starten einer neuen Rechnung CE drücken oder c eingeben.
 
-Zum Starten unter Windows sicherstellen das sich der jdk-Ordner, die .jar und die .bat im selben Ordner befinden und die .bat ausführen.
+Zum Starten unter Windows sicherstellen das sich der jdk-Ordner (erhältlich unter https://jdk.java.net/16/), die .jar und die .bat im selben Ordner befinden und die .bat ausführen.
