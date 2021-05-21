@@ -33,15 +33,21 @@ public class HelpD extends JDialog {
 		setTitle("Help");
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setAlwaysOnTop(true);
-		setBounds(100, 100, 500, 200);
+		setBounds(100, 100, 500, 220);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setLayout(new FlowLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		{
-			JLabel lblNewLabel = new JLabel("<html>  Vor Klammern muss auch bei Multiplikation zwingend ein Rechenzeichen.<br>  Maus während des Klickens nicht bewegen.<br>  Nur Zahlen werden unterstützt, keine Variablen.<br>  Es wird automatisch von der letzten Rechnung aus weitergerechnet.<br>  Zum starten einer neuen Rechnung CE drücken oder c eingeben.</html>");
+			JLabel lblNewLabel = new JLabel("<html>  Vor Klammern muss auch bei Multiplikation zwingend ein Rechenzeichen.<br>  Maus während des Klickens nicht bewegen.<br>  Nur Zahlen werden unterstützt, keine Variablen.<br>  Es wird automatisch von der letzten Rechnung aus weitergerechnet.<br>  Zum starten einer neuen Rechnung CE drücken oder c eingeben. <br> Using Rechner.java Version </html>" + Rechner.version());
+					
 			lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			contentPanel.add(lblNewLabel);
+			
+			JLabel lblNewLabel1 = new JLabel( Rechner.version());
+			
+			lblNewLabel1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			contentPanel.add(lblNewLabel1);
 		}
 		{
 			JPanel buttonPane = new JPanel();

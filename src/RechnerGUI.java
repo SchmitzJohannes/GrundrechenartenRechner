@@ -39,7 +39,7 @@ public class RechnerGUI extends JFrame {
 	 * Create the fr
 	 */
 	public RechnerGUI() {
-		setTitle("Rechnerartig");
+		setTitle("RechnerGUI V 1.0");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 320);
 		contentPane = new JPanel();

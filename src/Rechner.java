@@ -2,7 +2,6 @@
 public class Rechner {
 
 	public static void main(String[] args) {
-		// Version of compatibility with ,
 		// Vor Klammern muss auch bei Multiplikation zwingend ein Rechenzeichen.
 		// Rechner.main() dient nur dem Debug, von aussen wird direkt auf
 		// Rechner.rechnen() zugegriffen.
@@ -17,6 +16,11 @@ public class Rechner {
 		System.out.println("endErgebnis: " + ergebnis);
 	}
 
+	public static String version() {
+		String version = "of better Klammer() handling";
+		return version;
+	}
+	
 	// Rechner.rechnen nimmt die Rechnung an und gibt das Ergebnis der Rechnung
 	// zurück.
 	public static String rechnen(String rechnung) {
